@@ -36,4 +36,6 @@ def generate_primes(end, start=1):
             primes.append(num)
     return primes
 
-print(len(generate_primes(10000000)))
+if __name__ == "__main__":
+    print(len(generate_primes(1000000)))
+    input("press ENTER to exit...:")
