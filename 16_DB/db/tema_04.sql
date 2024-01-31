@@ -33,8 +33,11 @@ VALUES ("Duona", 3.12), ("Alus", 4.67), ("Suris", 6.34),
         ("Pienas", 2.37), ("Kava", 8.67);
 
 INSERT INTO bill (purchase_datetime, cashier_id, customer_id)
-VALUES (23.57, 3, 1), (14.24, 2, 1), (13.45, 1, 3), (9.12, 2, 2), (5.34, 3, 4),
-        (21.57, 1, 5), (15.14, 3, 6), (13.07, 2, 1), (3.12, 1, 6), (17.44, 3, 4);
+VALUES (DATETIME("2024-01-30 23:57"), 3, 1), (DATETIME("2024-01-30 14:24"), 2, 1),
+        (DATETIME("2024-01-30 13:45"), 1, 3), (DATETIME("2024-01-30 09:12"), 2, 2),
+        (DATETIME("2024-01-30 05:34"), 3, 4), (DATETIME("2024-01-30 21:57"), 1, 5),
+        (DATETIME("2024-01-30 15:14"), 3, 6), (DATETIME("2024-01-30 13:07"), 2, 1),
+        (DATETIME("2024-01-30 03:12"), 1, 6), (DATETIME("2024-01-30 17:44"), 3, 4);
 
 INSERT INTO bill_line (quantity, bill_id, product_id)
 VALUES (2, 1, 5), (2, 2, 4), (3, 3, 3), (8, 4, 2), (5, 5, 1),
