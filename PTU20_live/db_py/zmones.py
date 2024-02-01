@@ -19,9 +19,9 @@ def insert_friend(connector: sqlite3.Connection, cursor: sqlite3.Cursor):
     first_name = input("First Name: ")
     last_name = input("Last Name: ")
     email = input("E-mail: ")
-    with connector:
-        cursor.execute("INSERT INTO friends (first_name, last_name, email)"
-                       "VALUES (?, ?, ?)", (first_name, last_name, email))
+    cursor.execute("INSERT INTO friends (first_name, last_name, email)"
+                    "VALUES (?, ?, ?)", (first_name, last_name, email))
+    connector.commit()
     print("Done.")
 
 def print_friends(connector: sqlite3.Connection, cursor: sqlite3.Cursor):
@@ -29,20 +29,20 @@ def print_friends(connector: sqlite3.Connection, cursor: sqlite3.Cursor):
     with connector:
         cursor.execute("SELECT * FROM friends")
         friends = cursor.fetchall()
-        for friend in friends:
-            print(f"{friend[0]} {friend[1]}, {friend[2]}")
+    for friend in friends:
+        print(f"{friend[0]} {friend[1]}, {friend[2]}")
 
 def find_by(connector: sqlite3.Connection, cursor: sqlite3.Cursor, find_by: str):
     query = f'SELECT * FROM friends WHERE {find_by} = ?'
-    search_argument = input("Find friends by first name: ")
+    search_argument = input(f"Find friends by {find_by.replace('_', ' ')}: ")
     with connector:
         cursor.execute(query, (search_argument, ))
         friends = cursor.fetchall()
-        if len(friends) > 0:
-            for friend in friends:
-                print(f"{friend[0]} {friend[1]}, {friend[2]}")
-        else:
-            print("No friends found.")
+    if len(friends) > 0:
+        for friend in friends:
+            print(f"{friend[0]} {friend[1]}, {friend[2]}")
+    else:
+        print("No friends found.")
 
 if __name__ == "__main__":
     create_table(connector, cursor)
@@ -56,12 +56,17 @@ if __name__ == "__main__":
             print('i, insert\tinsert a friend')
             print('a, all\t\tprint all friends')
             print('ff\t\tfind by first name')
+            print('fl\t\tfind by last name')
+            print('fe\t\tfind by email')
         if choice.lower() in ["i", "insert"]:
             insert_friend(connector, cursor)
         if choice.lower() in ["a", "all"]:
             print_friends(connector, cursor)
         if choice.lower() in ["ff"]:
             find_by(connector, cursor, "first_name")
-
+        if choice.lower() in ["fl"]:
+            find_by(connector, cursor, "last_name")
+        if choice.lower() in ["fe"]:
+            find_by(connector, cursor, "email")
 
     connector.close()
